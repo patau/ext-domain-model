@@ -34,7 +34,33 @@ class DomainModeling2Tests: XCTestCase {
         let CANtoUSD = fifteenCAN.convert("USD")
         XCTAssert(CANtoUSD.description == "USD12")
     }
+
     
+    func testJobDescSalary() {
+        let job = Job(title: "Guest Lecturer", type: Job.JobType.Salary(1000))
+        XCTAssert(job.description == "Guest Lecturer, salary @ $1000")
+        job.raise(1000.0)
+        XCTAssert(job.description == "Guest Lecturer, salary @ $2000")
+    }
+    
+    func testJobDescHourly() {
+        let job = Job(title: "Janitor", type: Job.JobType.Hourly(15.0))
+        XCTAssert(job.description == "Janitor, hourly @ $15.0")
+    }
+    
+    let scooby = Person(firstName: "Scooby", lastName: "Doo", age: 21)
+    
+    func testPersonDesc() {
+        scooby.job = Job(title: "Mystery Detective", type: Job.JobType.Salary(1000))
+        XCTAssert(scooby.description == "Scooby Doo is 21 and works as a Mystery Detective, salary @ $1000")
+    }
+    
+    func testFamilyDesc() {
+        let shaggy = Person(firstName: "Shaggy", lastName: "Rogers", age: 21)
+        let fam = Family(spouse1: shaggy, spouse2: scooby)
+        XCTAssert(fam.description == "Family members:\nShaggy Rogers is 21 and has no job\nScooby Doo is 21 and has no job\nHousehold income: $0")
+    }
+
     //Tests double extension
     //Tests add protocol with same currency types
     func testProtocolAddUSDtoUSD() {

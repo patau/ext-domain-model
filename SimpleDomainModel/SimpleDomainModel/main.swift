@@ -144,8 +144,6 @@ open class Job: CustomStringConvertible {
   }
   
   open func raise(_ amt : Double) {
-    print("In raise")
-    print("Jobtype: \(self.type)")
     switch type {
     case .Hourly(let pay):
         type = JobType.Hourly(pay + amt)
